@@ -394,6 +394,52 @@ body{min-height:100vh;background:#07071a;overflow-x:hidden;font-family:'Fredoka 
   <div class="score" id="score">🎈 Click balloons to pop them! 💥</div>
   <button class="popbtn" onclick="spawnBalloons()">🎈 Release More Balloons!</button>
   <div class="msg">⚔️ A true warrior has reached Level 10!<br>Happy Birthday Evan — may your day be LEGENDARY! 🔥⚡</div>
+
+  <!-- Message bubbles -->
+  <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:18px;margin-top:28px;width:100%;max-width:960px;padding:0 12px;">
+
+    <!-- Mummy and Daddy -->
+    <div style="position:relative;background:linear-gradient(135deg,#ff6eb0,#ff3d8a);border-radius:28px 28px 28px 6px;padding:18px 22px;max-width:280px;flex:1;min-width:220px;box-shadow:0 0 22px rgba(255,80,160,.45);animation:bubbleWobble 3s ease-in-out infinite alternate;">
+      <div style="font-family:'Fredoka One',cursive;font-size:1.15rem;color:#fff;text-shadow:1px 1px 0 rgba(0,0,0,.25);line-height:1.4;text-align:center;">
+        Happy Birthday<br>love from<br>Mummy and Daddy<br>
+        <span style="font-size:1.6rem;display:inline-block;margin-top:6px;animation:heartbeat 1.2s ease-in-out infinite alternate;">❤️</span>
+        <span style="font-size:1.6rem;display:inline-block;animation:heartbeat 1.2s ease-in-out infinite alternate-reverse;animation-delay:.3s;">💕</span>
+      </div>
+      <!-- Bubble tail -->
+      <div style="position:absolute;bottom:-14px;left:22px;width:0;height:0;border-left:14px solid transparent;border-right:0px solid transparent;border-top:14px solid #ff3d8a;"></div>
+    </div>
+
+    <!-- Hannah -->
+    <div style="position:relative;background:linear-gradient(135deg,#a855f7,#7c3aed);border-radius:28px 28px 6px 28px;padding:18px 22px;max-width:280px;flex:1;min-width:220px;box-shadow:0 0 22px rgba(160,80,255,.45);animation:bubbleWobble 3.5s ease-in-out infinite alternate-reverse;">
+      <div style="font-family:'Fredoka One',cursive;font-size:1.15rem;color:#fff;text-shadow:1px 1px 0 rgba(0,0,0,.25);line-height:1.4;text-align:center;">
+        Happy Birthday<br>Lil' Bro' from<br>Big Sis, Hannah!<br>
+        <span style="font-size:1.6rem;display:inline-block;margin-top:6px;animation:heartbeat 1s ease-in-out infinite alternate;">💜</span>
+        <span style="font-size:1.6rem;display:inline-block;animation:heartbeat 1s ease-in-out infinite alternate-reverse;animation-delay:.2s;">💖</span>
+      </div>
+      <!-- Bubble tail (right side) -->
+      <div style="position:absolute;bottom:-14px;right:22px;width:0;height:0;border-left:0px solid transparent;border-right:14px solid transparent;border-top:14px solid #7c3aed;"></div>
+    </div>
+
+    <!-- Bauer the dog -->
+    <div style="position:relative;background:linear-gradient(135deg,#d97706,#b45309);border-radius:28px;padding:18px 22px;max-width:280px;flex:1;min-width:220px;box-shadow:0 0 22px rgba(220,140,0,.45);animation:bubbleWobble 2.8s ease-in-out infinite alternate;">
+      <div style="font-family:'Fredoka One',cursive;font-size:1.15rem;color:#fff;text-shadow:1px 1px 0 rgba(0,0,0,.25);line-height:1.5;text-align:center;">
+        Woof! Woof!<br>Woof! Woof!<br>
+        <span style="font-size:1.1rem;opacity:.85;display:block;margin-top:2px;">(from Bauer 🐕)</span>
+        <span style="font-size:1.5rem;display:inline-block;margin-top:6px;">🐾</span>
+        <span style="font-size:1.5rem;display:inline-block;">🐾</span>
+        <span style="font-size:1.5rem;display:inline-block;">🐾</span>
+        <span style="font-size:1.5rem;display:inline-block;">🐾</span>
+      </div>
+      <!-- Bubble tail (centre) -->
+      <div style="position:absolute;bottom:-14px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:10px solid transparent;border-right:10px solid transparent;border-top:14px solid #b45309;"></div>
+    </div>
+
+  </div>
+
+  <style>
+    @keyframes bubbleWobble{from{transform:translateY(0) rotate(-.5deg);}to{transform:translateY(-8px) rotate(.5deg);}}
+    @keyframes heartbeat{from{transform:scale(1);}to{transform:scale(1.25);}}
+  </style>
 </div>
 
 <canvas id="fw" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:3;pointer-events:none;"></canvas>
