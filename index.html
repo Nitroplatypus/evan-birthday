@@ -29,7 +29,7 @@ body{min-height:100vh;background:#07071a;overflow-x:hidden;font-family:'Fredoka 
 @keyframes np{from{transform:scale(1) rotate(-1.5deg);}to{transform:scale(1.07) rotate(1.5deg);}}
 
 /* Scene */
-.scene{width:100%;max-width:1000px;height:clamp(240px,38vh,360px);position:relative;margin-top:0;overflow:hidden;border-radius:14px;background:linear-gradient(180deg,#09093a 0%,#0a1a0a 72%,#152208 100%);}
+.scene{width:100%;max-width:1000px;height:clamp(300px,56vh,480px);position:relative;margin-top:0;overflow:hidden;border-radius:14px;background:linear-gradient(180deg,#09093a 0%,#0a1a0a 72%,#152208 100%);}
 
 /* Ground */
 .gnd{position:absolute;bottom:0;left:0;right:0;height:72px;background:linear-gradient(180deg,#1e5c12 0%,#0d2a08 100%);}
@@ -75,18 +75,14 @@ body{min-height:100vh;background:#07071a;overflow-x:hidden;font-family:'Fredoka 
 <div id="cf"></div>
 
 <div class="wrap">
-  <div style="text-align:center;margin-top:4px;position:relative;">
-    <div class="ttop">🎉 Happy</div>
-    <span style="display:inline-block;position:relative;">
-      <span class="num">10</span>
-      <span style="position:absolute;top:0.12em;right:-0.45em;font-family:'Fredoka One',cursive;font-size:clamp(0.6rem,2vw,1.3rem);color:#fff;text-shadow:0 0 14px #ff55ff,2px 2px 0 #6600cc;line-height:1;-webkit-text-fill-color:#fff;">TH</span>
+  <div style="display:flex;align-items:baseline;justify-content:center;flex-wrap:wrap;gap:0.3em;margin-top:4px;padding:0 12px;">
+    <span class="ttop">🎉 Happy</span>
+    <span style="display:inline-flex;align-items:baseline;gap:0.06em;">
+      <span class="num" style="font-size:clamp(2rem,4vw,3.2rem);">10</span><span style="font-family:'Fredoka One',cursive;font-size:clamp(0.85rem,1.7vw,1.3rem);color:#fff;text-shadow:0 0 14px #ff55ff,2px 2px 0 #6600cc;vertical-align:super;line-height:1;">TH</span>
     </span>
-    <div class="tbot">Birthday</div>
-    <div style="font-family:'Fredoka One',cursive;font-size:clamp(1.8rem,5.5vw,3.5rem);line-height:1;color:#ff55ff;text-shadow:0 0 24px #ff55ff,0 0 50px #cc00ff,4px 4px 0 #6600cc;animation:rock 2s ease-in-out infinite alternate-reverse;margin-top:-0.05em;">Evan! ⚔️</div>
-    <span style="position:absolute;top:-10px;left:-30px;font-size:1.8rem;animation:rock 2.2s linear infinite;">✨</span>
-    <span style="position:absolute;top:5px;right:-40px;font-size:2rem;animation:rock 1.8s linear infinite reverse;">⭐</span>
-    <span style="position:absolute;bottom:0;left:0;font-size:1.5rem;animation:rock 2.5s linear infinite;">💫</span>
-    <span style="position:absolute;bottom:0;right:0;font-size:1.5rem;animation:rock 2s linear infinite reverse;">✨</span>
+    <span class="tbot">Birthday</span>
+    <span style="font-family:'Fredoka One',cursive;font-size:clamp(2rem,4vw,3.2rem);color:#ff55ff;text-shadow:0 0 24px #ff55ff,0 0 50px #cc00ff,4px 4px 0 #6600cc;animation:rock 2s ease-in-out infinite alternate-reverse;line-height:1;">Evan!</span>
+    <span style="font-size:clamp(2rem,4vw,3.2rem);line-height:1;">⚔️</span>
   </div>
 
   <div class="scene-row" style="display:flex;align-items:center;width:100%;max-width:1350px;gap:12px;margin-top:6px;padding:0 8px;">
