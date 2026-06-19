@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy 10th Birthday Evan!</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;}
+body{min-height:100vh;background:#07071a;overflow-x:hidden;font-family:'Fredoka One',cursive;}
+
+.bg{position:fixed;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 0%,#1a0a3a,#07071a 70%);z-index:0;}
+
+/* Stars */
+.star{position:fixed;border-radius:50%;background:#fff;animation:tw var(--d,2s) ease-in-out infinite alternate;}
+@keyframes tw{from{opacity:.1;transform:scale(.6);}to{opacity:1;transform:scale(1.3);}}
+
+/* Confetti */
+.cf{position:fixed;top:-20px;animation:fall var(--fd,4s) linear var(--fl,0s) infinite;z-index:4;}
+@keyframes fall{0%{top:-20px;transform:translateX(0) rotate(0);}85%{opacity:1;}100%{top:105vh;transform:translateX(var(--dr,50px)) rotate(700deg);opacity:0;}}
+
+.wrap{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;padding:16px 8px 140px;}
+
+/* Title */
+.ttop{font-size:clamp(2rem,6.5vw,5rem);color:#fff;text-shadow:0 0 18px #ff55ff,3px 3px 0 #6600cc;animation:rock 2s ease-in-out infinite alternate;}
+.num{font-size:clamp(4.5rem,17vw,11rem);line-height:.88;background:linear-gradient(175deg,#ffe566,#ff8c00 50%,#ff1a00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 35px #ff7700);animation:np 1.3s ease-in-out infinite alternate;display:block;}
+.tbot{font-size:clamp(1.7rem,5.5vw,3.8rem);color:#00ffcc;text-shadow:0 0 18px #00ffcc,3px 3px 0 #005599;animation:rock 2s ease-in-out infinite alternate-reverse;}
+@keyframes rock{from{transform:translateY(-4px) rotate(-1deg);}to{transform:translateY(4px) rotate(1deg);}}
+@keyframes np{from{transform:scale(1) rotate(-1.5deg);}to{transform:scale(1.07) rotate(1.5deg);}}
+
+/* Scene */
+.scene{width:100%;max-width:1000px;height:420px;position:relative;margin-top:20px;overflow:hidden;border-radius:14px;background:linear-gradient(180deg,#09093a 0%,#0a1a0a 72%,#152208 100%);}
+
+/* Ground */
+.gnd{position:absolute;bottom:0;left:0;right:0;height:72px;background:linear-gradient(180deg,#1e5c12 0%,#0d2a08 100%);}
+.gnd::before{content:'';position:absolute;top:0;left:0;right:0;height:14px;background:linear-gradient(90deg,#1a6010,#2e8a18,#1a6010);border-radius:4px 4px 0 0;}
+
+/* Characters as absolutely positioned divs */
+.char{position:absolute;bottom:70px;cursor:default;z-index:12;}
+
+/* Balloon holder characters */
+.bchar{position:absolute;z-index:14;cursor:pointer;transition:filter .15s;}
+.bchar:hover{filter:brightness(1.2);}
+
+/* Falling animation when balloon popped */
+.bchar.falling{animation:charFall 1.1s cubic-bezier(.55,.06,.68,.19) forwards!important;}
+@keyframes charFall{0%{transform:translateY(0) rotate(0);}30%{transform:translateY(30px) rotate(15deg);}100%{transform:translateY(340px) rotate(45deg);opacity:0;}}
+
+/* Balloon float animation */
+.bfloat{animation:bfloat var(--bd,3s) ease-in-out infinite alternate;}
+@keyframes bfloat{from{transform:translateY(0) rotate(calc(var(--bs,1)*-3deg));}to{transform:translateY(-18px) rotate(calc(var(--bs,1)*3deg));}}
+
+/* Fireball */
+.fireball{position:absolute;width:28px;height:22px;background:radial-gradient(ellipse,#aaddff 20%,#2299ff 55%,#0044cc 100%);border-radius:50%;z-index:20;pointer-events:none;box-shadow:0 0 18px 8px #44aaff,0 0 40px 15px rgba(0,100,255,0.4);animation:fbglow .25s ease-in-out infinite alternate;}
+@keyframes fbglow{from{box-shadow:0 0 15px 6px #44aaff,0 0 32px 12px rgba(0,100,255,0.3);}to{box-shadow:0 0 25px 12px #88ccff,0 0 50px 20px rgba(0,150,255,0.5);}}
+
+/* Pop burst */
+.burst{position:absolute;pointer-events:none;z-index:25;animation:bpop .5s ease-out forwards;}
+@keyframes bpop{0%{transform:scale(.2);opacity:1;}100%{transform:scale(2.5);opacity:0;}}
+
+/* Pop particles */
+.pp{position:absolute;border-radius:50%;pointer-events:none;animation:pout .7s ease-out forwards;z-index:24;}
+@keyframes pout{0%{transform:translate(0,0) scale(1);opacity:1;}100%{transform:translate(var(--px,40px),var(--py,-40px)) scale(0);opacity:0;}}
+
+.score{font-size:1.45rem;color:#ffee00;text-shadow:0 0 14px #ffaa00;text-align:center;margin-top:12px;}
+.popbtn{background:linear-gradient(135deg,#cc44ff,#5500cc);border:none;color:#fff;font-family:'Fredoka One',cursive;font-size:1.25rem;padding:13px 36px;border-radius:50px;cursor:pointer;margin-top:14px;box-shadow:0 0 25px rgba(180,80,255,.5);animation:bp 1.6s ease-in-out infinite alternate;z-index:20;position:relative;}
+@keyframes bp{from{transform:scale(1);}to{transform:scale(1.05);box-shadow:0 0 44px rgba(180,80,255,.8);}}
+.msg{font-size:clamp(1rem,3.2vw,1.7rem);color:#fff;text-align:center;margin:16px auto 0;max-width:660px;padding:11px 22px;background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.18);border-radius:18px;animation:mg 2.5s ease-in-out infinite alternate;}
+@keyframes mg{from{box-shadow:0 0 18px rgba(255,80,255,.2);}to{box-shadow:0 0 36px rgba(80,180,255,.4);}}
+</style>
+</head>
+<body>
+<div class="bg"></div>
+<div id="stars"></div>
+<div id="cf"></div>
+
+<div class="wrap">
+  <div style="text-align:center;margin-top:16px;position:relative;">
+    <div class="ttop">🎉 Happy</div>
+    <span style="display:inline-block;position:relative;">
+      <span class="num">10</span>
+      <span style="position:absolute;top:0.12em;right:-0.45em;font-family:'Fredoka One',cursive;font-size:clamp(1.2rem,4.5vw,3rem);color:#fff;text-shadow:0 0 14px #ff55ff,2px 2px 0 #6600cc;line-height:1;-webkit-text-fill-color:#fff;">TH</span>
+    </span>
+    <div class="tbot">Birthday</div>
+    <div style="font-family:'Fredoka One',cursive;font-size:clamp(3.5rem,13vw,9rem);line-height:1;color:#ff55ff;text-shadow:0 0 24px #ff55ff,0 0 50px #cc00ff,4px 4px 0 #6600cc;animation:rock 2s ease-in-out infinite alternate-reverse;margin-top:-0.05em;">Evan! ⚔️</div>
+    <span style="position:absolute;top:-10px;left:-30px;font-size:1.8rem;animation:rock 2.2s linear infinite;">✨</span>
+    <span style="position:absolute;top:5px;right:-40px;font-size:2rem;animation:rock 1.8s linear infinite reverse;">⭐</span>
+    <span style="position:absolute;bottom:0;left:0;font-size:1.5rem;animation:rock 2.5s linear infinite;">💫</span>
+    <span style="position:absolute;bottom:0;right:0;font-size:1.5rem;animation:rock 2s linear infinite reverse;">✨</span>
+  </div>
+
+  <div class="scene" id="scene">
+    <div class="gnd"></div>
+
+    <!-- ======= GROUND WALKERS ======= -->
+
+    <!-- TANJIRO-STYLE: dark haori with checkered hem, running left to right -->
+    <div class="char" id="g1" style="left:-90px;animation:runRL 8s linear infinite;">
+      <svg width="70" height="132" viewBox="0 0 70 132">
+        <!-- Haori streaming back -->
+        <path d="M30 48 C14 62 6 90 4 128 L18 126 C20 98 26 74 34 58Z" fill="#1c1c1c"/>
+        <!-- Checkered hem detail -->
+        <rect x="4" y="100" width="7" height="7" fill="#cc1111" opacity=".85"/>
+        <rect x="11" y="107" width="7" height="7" fill="#cc1111" opacity=".85"/>
+        <rect x="4" y="114" width="7" height="7" fill="#cc1111" opacity=".85"/>
+        <rect x="11" y="121" width="7" height="7" fill="#cc1111" opacity=".85"/>
+        <!-- Body: dark uniform -->
+        <rect x="21" y="46" width="28" height="46" rx="4" fill="#1a2230"/>
+        <!-- Uniform seams -->
+        <line x1="35" y1="46" x2="35" y2="92" stroke="#222e40" stroke-width="1.5"/>
+        <!-- Belt -->
+        <rect x="19" y="68" width="32" height="8" rx="4" fill="#1a0e06"/>
+        <rect x="19" y="68" width="32" height="3" rx="2" fill="#2a160a"/>
+        <!-- Legs: running spread -->
+        <rect x="21" y="90" width="12" height="36" rx="5" fill="#12182a" transform="rotate(-18,27,90)"/>
+        <rect x="35" y="90" width="12" height="36" rx="5" fill="#12182a" transform="rotate(22,41,90)"/>
+        <!-- Leg wraps -->
+        <rect x="19" y="101" width="14" height="5" rx="2" fill="#d5d0c8" transform="rotate(-18,26,103)"/>
+        <rect x="34" y="99" width="14" height="5" rx="2" fill="#d5d0c8" transform="rotate(22,41,101)"/>
+        <!-- Tabi sandals -->
+        <ellipse cx="18" cy="124" rx="10" ry="5.5" fill="#2a1c10" transform="rotate(-18,18,124)"/>
+        <ellipse cx="47" cy="121" rx="10" ry="5.5" fill="#2a1c10" transform="rotate(10,47,121)"/>
+        <!-- Arms: running swing -->
+        <path d="M22 54 L7 66 L10 72 L26 60Z" fill="#1a2230"/>
+        <path d="M46 50 L60 38 L64 44 L50 56Z" fill="#1a2230"/>
+        <!-- Hands -->
+        <ellipse cx="6" cy="69" rx="6" ry="7" fill="#f0b880"/>
+        <ellipse cx="62" cy="41" rx="6" ry="7" fill="#f0b880"/>
+        <!-- Katana in raised hand -->
+        <rect x="55" y="6" width="3.5" height="44" rx="1.5" fill="#c8cce0" transform="rotate(-28,56,28)"/>
+        <rect x="53" y="11" width="8" height="5" rx="1.5" fill="#8a6a0a" transform="rotate(-28,57,13)"/>
+        <rect x="54" y="16" width="5" height="14" rx="2" fill="#3a2808" transform="rotate(-28,56,23)"/>
+        <line x1="62" y1="4" x2="55" y2="14" stroke="#ffffff" stroke-width="1.2" opacity=".75"/>
+
+        <!-- HEAD: angular jaw, defined features -->
+        <!-- Neck -->
+        <rect x="30" y="36" width="12" height="12" rx="3" fill="#f0b880"/>
+        <!-- Face: angular, slightly wide jaw -->
+        <path d="M18 24 C18 10 52 10 52 24 C52 38 48 46 35 46 C22 46 18 38 18 24Z" fill="#f0b880"/>
+        <!-- Jaw shadow -->
+        <path d="M22 40 Q35 48 48 40" stroke="#d4946a" stroke-width="1" fill="none" opacity=".5"/>
+
+        <!-- Hair base -->
+        <path d="M16 22 C16 6 54 6 54 22 C54 16 50 8 35 8 C20 8 16 16 16 22Z" fill="#1a0808"/>
+        <!-- Hair volume top -->
+        <ellipse cx="35" cy="12" rx="21" ry="10" fill="#1a0808"/>
+        <!-- Signature hair parts over forehead -->
+        <path d="M22 16 C20 8 26 4 28 12" fill="#1a0808"/>
+        <path d="M30 12 C29 4 34 2 35 10" fill="#1a0808"/>
+        <path d="M36 12 C36 4 40 4 42 12" fill="#1a0808"/>
+        <!-- Red tipped ends -->
+        <path d="M20 18 C18 10 22 6 22 14" fill="#880000" opacity=".8"/>
+        <!-- Long side hair -->
+        <path d="M18 18 C10 26 10 36 12 46" stroke="#1a0808" stroke-width="8" fill="none" stroke-linecap="round"/>
+        <!-- Forehead mark/scar -->
+        <path d="M28 17 C29 15 31 15 32 17" stroke="#cc2200" stroke-width="2" fill="none" stroke-linecap="round"/>
+
+        <!-- Eyes: highly detailed anime style -->
+        <!-- Eye whites -->
+        <ellipse cx="27" cy="29" rx="6.5" ry="7.5" fill="white"/>
+        <ellipse cx="43" cy="29" rx="6.5" ry="7.5" fill="white"/>
+        <!-- Upper eyelid shadow (thick) -->
+        <path d="M21 24 C21 22 33 22 33 24" fill="#1a0808"/>
+        <path d="M37 24 C37 22 49 22 49 24" fill="#1a0808"/>
+        <!-- Iris: layered deep burgundy/red -->
+        <ellipse cx="27" cy="30" rx="5" ry="6" fill="#6a0a0a"/>
+        <ellipse cx="43" cy="30" rx="5" ry="6" fill="#6a0a0a"/>
+        <!-- Iris texture ring -->
+        <ellipse cx="27" cy="30" rx="4" ry="5" fill="none" stroke="#8a1010" stroke-width="1"/>
+        <ellipse cx="43" cy="30" rx="4" ry="5" fill="none" stroke="#8a1010" stroke-width="1"/>
+        <!-- Pupil -->
+        <ellipse cx="27" cy="31" rx="2.5" ry="3" fill="#100000"/>
+        <ellipse cx="43" cy="31" rx="2.5" ry="3" fill="#100000"/>
+        <!-- Primary shine -->
+        <ellipse cx="29" cy="27" rx="2" ry="2.5" fill="white"/>
+        <ellipse cx="45" cy="27" rx="2" ry="2.5" fill="white"/>
+        <!-- Secondary shine -->
+        <circle cx="25" cy="33" r=".9" fill="rgba(255,255,255,.55)"/>
+        <circle cx="41" cy="33" r=".9" fill="rgba(255,255,255,.55)"/>
+        <!-- Lower lash line -->
+        <path d="M21.5 34 C22 35 27 36 32.5 34" stroke="#1a0808" stroke-width=".8" fill="none"/>
+        <path d="M37.5 34 C38 35 43 36 48.5 34" stroke="#1a0808" stroke-width=".8" fill="none"/>
+
+        <!-- Eyebrows: thick, angled down toward nose -->
+        <path d="M20 21 L34 24" stroke="#1a0808" stroke-width="3" stroke-linecap="round"/>
+        <path d="M36 24 L50 21" stroke="#1a0808" stroke-width="3" stroke-linecap="round"/>
+
+        <!-- Nose: minimal, defined -->
+        <path d="M32 35 Q35 38 38 35" stroke="#c47a50" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+        <!-- Nostril shadows -->
+        <circle cx="32.5" cy="36" r="1" fill="#c07050" opacity=".6"/>
+        <circle cx="37.5" cy="36" r="1" fill="#c07050" opacity=".6"/>
+
+        <!-- Mouth: determined set -->
+        <path d="M27 42 C30 44 40 44 43 42" stroke="#c07050" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+
+        <!-- Cheekbone blush (subtle) -->
+        <ellipse cx="20" cy="33" rx="4.5" ry="2.5" fill="#ffaaaa" opacity=".22"/>
+        <ellipse cx="50" cy="33" rx="4.5" ry="2.5" fill="#ffaaaa" opacity=".22"/>
+
+        <!-- Earrings: dangling -->
+        <circle cx="16" cy="30" r="3" fill="#222" stroke="#777" stroke-width=".8"/>
+        <rect x="14.5" y="33" width="3" height="7" rx="1.5" fill="#d4b030"/>
+        <ellipse cx="16" cy="41" rx="4.5" ry="3" fill="#d4b030"/>
+
+        <!-- Speed lines -->
+        <line x1="-16" y1="56" x2="-2" y2="58" stroke="white" stroke-width="2" opacity=".5"/>
+        <line x1="-22" y1="70" x2="-4" y2="71" stroke="white" stroke-width="2" opacity=".38"/>
+        <line x1="-16" y1="84" x2="-2" y2="84" stroke="white" stroke-width="1.5" opacity=".28"/>
+        <!-- Slash effect -->
+        <path d="M58 2 Q68 12 62 24 Q72 16 58 2Z" fill="rgba(255,255,200,.55)"/>
+      </svg>
+    </div>
+    <style>
+      @keyframes runRL{0%{left:-90px;transform:scaleX(1);}45%{left:calc(100% + 10px);transform:scaleX(1);}46%{left:calc(100% + 10px);transform:scaleX(-1);}92%{left:-90px;transform:scaleX(-1);}93%,100%{left:-90px;transform:scaleX(1);}}
+    </style>
+
+    <!-- SAITAMA-STYLE: bald, yellow suit, power pose on ground -->
+    <div class="char" id="g2" style="left:32%;animation:powerAnim 3.5s ease-in-out infinite;">
+      <svg width="72" height="130" viewBox="0 0 72 130">
+        <!-- Cape -->
+        <path d="M30 46 C10 68 8 108 6 128 L22 126 C24 98 28 76 36 58Z" fill="#f0f0f0" stroke="#ccc" stroke-width=".7"/>
+        <path d="M40 48 C52 70 54 108 56 128 L42 126 C40 98 38 76 34 58Z" fill="#eeeeee" stroke="#ccc" stroke-width=".7"/>
+        <!-- Cape lining -->
+        <path d="M30 46 L22 126" stroke="#fff" stroke-width="3" opacity=".6"/>
+        <!-- Body: yellow suit with white trim -->
+        <rect x="21" y="46" width="30" height="46" rx="5" fill="#e8cc00"/>
+        <!-- Suit vertical seam -->
+        <line x1="36" y1="46" x2="36" y2="92" stroke="#d0b800" stroke-width="1.5"/>
+        <!-- Belt: black with gold buckle -->
+        <rect x="19" y="70" width="34" height="9" rx="4.5" fill="#111"/>
+        <rect x="31" y="68" width="10" height="13" rx="2" fill="#cc9900"/>
+        <rect x="33" y="70" width="6" height="9" rx="1" fill="#ffcc00"/>
+        <!-- Legs -->
+        <rect x="22" y="90" width="13" height="36" rx="6" fill="#e8cc00" transform="rotate(-5,28,90)"/>
+        <rect x="36" y="90" width="13" height="36" rx="6" fill="#e8cc00" transform="rotate(5,43,90)"/>
+        <!-- Boots -->
+        <ellipse cx="26" cy="128" rx="12" ry="6" fill="#111"/>
+        <ellipse cx="45" cy="128" rx="12" ry="6" fill="#111"/>
+        <!-- Boot detail -->
+        <line x1="15" y1="123" x2="37" y2="123" stroke="#333" stroke-width="1"/>
+        <line x1="34" y1="123" x2="57" y2="123" stroke="#333" stroke-width="1"/>
+        <!-- Arms: dynamic raised punch pose -->
+        <path d="M21 52 L4 40 L6 48 L24 60Z" fill="#e8cc00"/>
+        <path d="M50 50 L68 36 L70 44 L52 58Z" fill="#e8cc00"/>
+        <!-- Gloves: yellow with black trim -->
+        <ellipse cx="4" cy="43" rx="8" ry="9" fill="#e8cc00" stroke="#c8aa00" stroke-width="1"/>
+        <ellipse cx="68" cy="39" rx="8" ry="9" fill="#e8cc00" stroke="#c8aa00" stroke-width="1"/>
+        <!-- Knuckle lines -->
+        <line x1="-2" y1="42" x2="10" y2="42" stroke="#c8aa00" stroke-width="1"/>
+        <line x1="62" y1="38" x2="74" y2="38" stroke="#c8aa00" stroke-width="1"/>
+
+        <!-- Cape neck clasp -->
+        <circle cx="36" cy="48" r="5" fill="#cc8800" stroke="#ffcc00" stroke-width="1.2"/>
+        <circle cx="36" cy="48" r="2.5" fill="#ffcc00"/>
+
+        <!-- HEAD: bald, angular -->
+        <rect x="29" y="34" width="14" height="14" rx="3" fill="#f0c88a"/>
+        <!-- Face oval: clean, defined chin -->
+        <path d="M16 22 C16 8 56 8 56 22 C56 36 52 44 36 46 C20 44 16 36 16 22Z" fill="#f0c88a"/>
+        <!-- Chin definition -->
+        <path d="M24 42 Q36 48 48 42" stroke="#d4946a" stroke-width="1" fill="none" opacity=".6"/>
+        <!-- Bald head highlight (that iconic OPM gleam) -->
+        <ellipse cx="28" cy="16" rx="10" ry="7" fill="rgba(255,255,255,.32)" transform="rotate(-25,28,16)"/>
+        <ellipse cx="25" cy="13" rx="5" ry="3.5" fill="rgba(255,255,255,.2)" transform="rotate(-25,25,13)"/>
+
+        <!-- Eyebrows: raised, somewhat comically high for surprised look -->
+        <path d="M22 19 C24 16 30 16 32 19" stroke="#7a5a30" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <path d="M40 19 C42 16 48 16 50 19" stroke="#7a5a30" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+
+        <!-- Eyes: trademark OPM deadpan / intense -->
+        <ellipse cx="27" cy="27" rx="7" ry="7.5" fill="white"/>
+        <ellipse cx="45" cy="27" rx="7" ry="7.5" fill="white"/>
+        <!-- Upper lid -->
+        <path d="M20 22 C20 20 34 20 34 22" fill="#1a1008"/>
+        <path d="M38 22 C38 20 52 20 52 22" fill="#1a1008"/>
+        <!-- Iris: deep black (OPM style) -->
+        <circle cx="27" cy="28" r="5.5" fill="#0a0a0a"/>
+        <circle cx="45" cy="28" r="5.5" fill="#0a0a0a"/>
+        <!-- Shine -->
+        <ellipse cx="29" cy="25" rx="2.2" ry="2.8" fill="white"/>
+        <ellipse cx="47" cy="25" rx="2.2" ry="2.8" fill="white"/>
+        <circle cx="25" cy="31" r="1" fill="rgba(255,255,255,.5)"/>
+        <circle cx="43" cy="31" r="1" fill="rgba(255,255,255,.5)"/>
+        <!-- Lower lash -->
+        <path d="M20 33 C23 35 31 35 34 33" stroke="#1a1008" stroke-width=".9" fill="none"/>
+        <path d="M38 33 C41 35 49 35 52 33" stroke="#1a1008" stroke-width=".9" fill="none"/>
+
+        <!-- Nose: minimal dot -->
+        <path d="M34 35 Q36 38 38 35" stroke="#c07a50" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+
+        <!-- Mouth: serious flat line with slight smirk -->
+        <path d="M26 42 C30 43 42 43 46 42" stroke="#b07050" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+
+        <!-- Ear -->
+        <path d="M16 26 C12 26 10 30 12 34 C14 38 16 38 16 36" stroke="#e0a870" stroke-width="1.5" fill="none"/>
+        <path d="M56 26 C60 26 62 30 60 34 C58 38 56 38 56 36" stroke="#e0a870" stroke-width="1.5" fill="none"/>
+
+        <!-- Power aura lines -->
+        <line x1="0" y1="30" x2="-12" y2="22" stroke="#ffcc00" stroke-width="2" opacity=".7"/>
+        <line x1="72" y1="28" x2="84" y2="20" stroke="#ffcc00" stroke-width="2" opacity=".7"/>
+        <line x1="36" y1="4" x2="36" y2="-12" stroke="#ffcc00" stroke-width="2" opacity=".7"/>
+      </svg>
+    </div>
+    <style>
+      @keyframes powerAnim{0%,100%{transform:translateY(0) scale(1);}40%{transform:translateY(-10px) scale(1.04);filter:drop-shadow(0 0 14px #ffcc00);}70%{transform:translateY(-5px) scale(1.02);}}
+    </style>
+
+    <!-- ZENITSU-STYLE: lightning, scared/heroic pose -->
+    <div class="char" id="g3" style="right:60px;animation:zAnim 2.8s ease-in-out infinite;">
+      <svg width="68" height="128" viewBox="0 0 68 128">
+        <!-- Yellow haori (lightning pattern) -->
+        <path d="M28 46 C10 68 6 100 4 126 L18 124 C20 98 24 74 32 58Z" fill="#ccaa00"/>
+        <!-- Lightning bolts on haori -->
+        <path d="M8 72 L12 64 L10 70 L14 62 L12 68 L16 60" stroke="#fff" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        <path d="M8 86 L12 78 L10 84 L14 76" stroke="#fff" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        <path d="M8 100 L12 92 L10 98" stroke="#fff" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        <!-- Body -->
+        <rect x="21" y="46" width="28" height="44" rx="4" fill="#1a2230"/>
+        <rect x="19" y="68" width="32" height="7" rx="3.5" fill="#1a0e06"/>
+        <!-- Legs -->
+        <rect x="22" y="88" width="12" height="36" rx="5" fill="#12182a" transform="rotate(-10,28,88)"/>
+        <rect x="34" y="88" width="12" height="36" rx="5" fill="#12182a" transform="rotate(12,40,88)"/>
+        <!-- Wraps + sandals -->
+        <rect x="20" y="99" width="13" height="5" rx="2" fill="#d5d0c8" transform="rotate(-10,26,101)"/>
+        <rect x="33" y="97" width="13" height="5" rx="2" fill="#d5d0c8" transform="rotate(12,40,99)"/>
+        <ellipse cx="20" cy="122" rx="9" ry="5" fill="#2a1c10" transform="rotate(-10,20,122)"/>
+        <ellipse cx="44" cy="121" rx="9" ry="5" fill="#2a1c10" transform="rotate(8,44,121)"/>
+        <!-- Arms: one up defensive, one out -->
+        <path d="M22 52 L8 44 L10 52 L24 58Z" fill="#1a2230"/>
+        <path d="M46 54 L60 62 L58 68 L44 62Z" fill="#1a2230"/>
+        <ellipse cx="7" cy="48" rx="6" ry="7" fill="#f0b880"/>
+        <ellipse cx="61" cy="65" rx="6" ry="7" fill="#f0b880"/>
+        <!-- Electric sparks around hands -->
+        <path d="M0 42 L4 36 L2 44 L6 38" stroke="#ffee00" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <path d="M64 60 L68 54 L66 62 L70 56" stroke="#ffee00" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+
+        <!-- HEAD -->
+        <rect x="28" y="34" width="12" height="14" rx="3" fill="#f0b880"/>
+        <path d="M16 22 C16 8 52 8 52 22 C52 36 48 44 34 46 C20 44 16 36 16 22Z" fill="#f0b880"/>
+        <path d="M22 40 Q34 48 46 40" stroke="#d4946a" stroke-width="1" fill="none" opacity=".5"/>
+
+        <!-- Hair: long, loose, blonde/gold flowing -->
+        <path d="M14 18 C10 6 18 2 22 12" fill="#d4a000"/>
+        <path d="M22 12 C20 2 28 0 30 10" fill="#e0aa00"/>
+        <path d="M30 10 C28 0 36 -1 37 9" fill="#f0b800"/>
+        <path d="M37 9 C37 -1 44 0 44 10" fill="#e0aa00"/>
+        <path d="M44 10 C46 2 52 4 50 14" fill="#d4a000"/>
+        <!-- Hair mass on sides, falling long -->
+        <ellipse cx="34" cy="12" rx="20" ry="10" fill="#d4a000"/>
+        <path d="M14 18 C6 32 8 60 10 90" stroke="#c89800" stroke-width="10" fill="none" stroke-linecap="round"/>
+        <path d="M54 18 C62 32 62 60 58 90" stroke="#c89800" stroke-width="8" fill="none" stroke-linecap="round"/>
+        <!-- Forehead headband -->
+        <rect x="14" y="18" width="40" height="6" rx="3" fill="#1a2230"/>
+        <!-- Headband symbol -->
+        <rect x="30" y="19" width="8" height="4" rx="1" fill="#888"/>
+
+        <!-- Eyes: very large, expressive (scared/heroic) -->
+        <ellipse cx="26" cy="28" rx="7" ry="8" fill="white"/>
+        <ellipse cx="42" cy="28" rx="7" ry="8" fill="white"/>
+        <path d="M19 22 C19 20 33 20 33 22" fill="#1a1008"/>
+        <path d="M35 22 C35 20 49 20 49 22" fill="#1a1008"/>
+        <!-- Golden iris -->
+        <ellipse cx="26" cy="29" rx="5.5" ry="6.5" fill="#c08000"/>
+        <ellipse cx="42" cy="29" rx="5.5" ry="6.5" fill="#c08000"/>
+        <ellipse cx="26" cy="29" rx="4.2" ry="5" fill="#d09010"/>
+        <ellipse cx="42" cy="29" rx="4.2" ry="5" fill="#d09010"/>
+        <ellipse cx="26" cy="30" rx="2.5" ry="3" fill="#0a0800"/>
+        <ellipse cx="42" cy="30" rx="2.5" ry="3" fill="#0a0800"/>
+        <ellipse cx="28" cy="26" rx="2" ry="2.5" fill="white"/>
+        <ellipse cx="44" cy="26" rx="2" ry="2.5" fill="white"/>
+        <circle cx="24" cy="33" r=".9" fill="rgba(255,255,255,.5)"/>
+        <circle cx="40" cy="33" r=".9" fill="rgba(255,255,255,.5)"/>
+        <path d="M19 35 C21 36 25 37 33 35" stroke="#1a1008" stroke-width=".8" fill="none"/>
+        <path d="M35 35 C37 36 41 37 49 35" stroke="#1a1008" stroke-width=".8" fill="none"/>
+
+        <!-- Eyebrows: worried angle -->
+        <path d="M20 19 L32 22" stroke="#8a6a20" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M36 22 L48 19" stroke="#8a6a20" stroke-width="2.5" stroke-linecap="round"/>
+
+        <path d="M30 36 Q34 39 38 36" stroke="#c07050" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+        <path d="M26 42 C30 44 38 44 42 42" stroke="#c07050" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <circle cx="34" cy="36" r="1.5" fill="#c07050" opacity=".4"/>
+        <!-- Lightning aura -->
+        <path d="M2 48 L6 40 L4 50 L8 42" stroke="#ffee00" stroke-width="2" fill="none" stroke-linecap="round" opacity=".8"/>
+        <path d="M66 50 L62 42 L64 52 L60 44" stroke="#ffee00" stroke-width="2" fill="none" stroke-linecap="round" opacity=".8"/>
+      </svg>
+    </div>
+    <style>@keyframes zAnim{0%,100%{transform:translateY(0);}35%{transform:translateY(-14px);filter:drop-shadow(0 0 12px #ffcc00);}70%{transform:translateY(-6px);}}</style>
+
+    <!-- ====== BALLOON CHARACTERS (float and fall when popped) ====== -->
+  </div>
+
+  <div class="score" id="score">🎈 Click balloons to pop them! 💥</div>
+  <button class="popbtn" onclick="spawnBalloons()">🎈 Release More Balloons!</button>
+  <div class="msg">⚔️ A true warrior has reached Level 10!<br>Happy Birthday Evan — may your day be LEGENDARY! 🔥⚡</div>
+</div>
+
+<canvas id="fw" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:3;pointer-events:none;"></canvas>
+
+<script>
+// Stars
+const SE=document.getElementById('stars');
+for(let i=0;i<90;i++){const s=document.createElement('div');s.className='star';s.style.cssText=`position:fixed;left:${Math.random()*100}%;top:${Math.random()*100}%;width:${1.5+Math.random()*3.5}px;height:${1.5+Math.random()*3.5}px;--d:${1+Math.random()*3}s;animation-delay:${Math.random()*4}s;`;SE.appendChild(s);}
+
+// Confetti
+const CC=['#ff3366','#ff9900','#ffff00','#00ff88','#00ddff','#cc00ff','#ff6ef7','#fff','#ff4444'];
+const CE=document.getElementById('cf');
+for(let i=0;i<52;i++){const c=document.createElement('div');c.className='cf';c.style.cssText=`left:${Math.random()*100}%;background:${CC[~~(Math.random()*CC.length)]};--fd:${3.5+Math.random()*4}s;--fl:${Math.random()*6}s;--dr:${Math.random()*120-60}px;width:${8+Math.random()*8}px;height:${12+Math.random()*8}px;border-radius:${Math.random()>.5?'50%':'2px'};`;CE.appendChild(c);}
+
+// Balloon+character data
+const scene=document.getElementById('scene');
+const sceneRect=()=>scene.getBoundingClientRect();
+let popped=0,fireTarget=null;
+
+const BCHARS=[
+  {
+    col:'#ff3333',charSvg:makeSvg_water(),
+    startX:12,startY:-180,floatD:'2.6s',bs:1
+  },
+  {
+    col:'#aa44ff',charSvg:makeSvg_wind(),
+    startX:28,startY:-200,floatD:'3.1s',bs:-1
+  },
+  {
+    col:'#ff8800',charSvg:makeSvg_flame(),
+    startX:50,startY:-170,floatD:'2.4s',bs:1
+  },
+  {
+    col:'#00bbff',charSvg:makeSvg_thunder(),
+    startX:70,startY:-190,floatD:'3.4s',bs:-1
+  },
+];
+
+// SVG for balloon-riding character: water/ice style (Giyu-inspired)
+function makeSvg_water(){
+  return `<svg width="58" height="110" viewBox="0 0 58 110">
+  <!-- Half-half haori -->
+  <path d="M22 42 C8 56 4 88 2 108 L14 106 C16 82 20 62 28 50Z" fill="#c0c0ff"/>
+  <path d="M32 44 C38 58 40 82 42 108 L30 106 C28 84 26 64 28 50Z" fill="#cc2200"/>
+  <!-- Seam line -->
+  <line x1="28" y1="44" x2="28" y2="108" stroke="#666" stroke-width="1"/>
+  <!-- Body -->
+  <rect x="18" y="40" width="24" height="38" rx="4" fill="#1a2230"/>
+  <rect x="16" y="58" width="28" height="6" rx="3" fill="#1a0e06"/>
+  <!-- Legs hanging -->
+  <rect x="18" y="76" width="10" height="30" rx="4" fill="#1a1a2a" transform="rotate(8,23,76)"/>
+  <rect x="30" y="76" width="10" height="30" rx="4" fill="#1a1a2a" transform="rotate(-8,35,76)"/>
+  <ellipse cx="22" cy="106" rx="8" ry="4" fill="#2a1c10"/>
+  <ellipse cx="37" cy="106" rx="8" ry="4" fill="#2a1c10"/>
+  <!-- Arms gripping rope -->
+  <path d="M18 44 L6 36 L8 42 L20 48Z" fill="#1a2230"/>
+  <path d="M38 44 L50 36 L52 42 L40 48Z" fill="#1a2230"/>
+  <ellipse cx="5" cy="39" rx="5" ry="6" fill="#f0b880"/>
+  <ellipse cx="53" cy="39" rx="5" ry="6" fill="#f0b880"/>
+  <!-- Head -->
+  <rect x="23" y="28" width="12" height="14" rx="3" fill="#f0b880"/>
+  <path d="M14 18 C14 6 44 6 44 18 C44 30 40 38 29 40 C18 38 14 30 14 18Z" fill="#f0b880"/>
+  <!-- Hair: dark, slicked back -->
+  <path d="M12 16 C12 4 46 4 46 16 L44 16 C44 8 14 8 14 16Z" fill="#1a0808"/>
+  <ellipse cx="29" cy="8" rx="18" ry="8" fill="#1a0808"/>
+  <!-- Eyes: calm, half-lidded -->
+  <ellipse cx="23" cy="22" rx="5.5" ry="5" fill="white"/>
+  <ellipse cx="35" cy="22" rx="5.5" ry="5" fill="white"/>
+  <path d="M17.5 18 C17.5 17 28.5 17 28.5 18" fill="#1a0808"/>
+  <path d="M29.5 18 C29.5 17 40.5 17 40.5 18" fill="#1a0808"/>
+  <ellipse cx="23" cy="23" rx="4" ry="4.5" fill="#00448a"/>
+  <ellipse cx="35" cy="23" rx="4" ry="4.5" fill="#00448a"/>
+  <ellipse cx="23" cy="24" rx="2.2" ry="2.5" fill="#000a18"/>
+  <ellipse cx="35" cy="24" rx="2.2" ry="2.5" fill="#000a18"/>
+  <ellipse cx="24.5" cy="21" rx="1.6" ry="2" fill="white"/>
+  <ellipse cx="36.5" cy="21" rx="1.6" ry="2" fill="white"/>
+  <!-- Closed upper lids (calm look) -->
+  <path d="M17.5 20 C18 18.5 28 18.5 28.5 20" stroke="#1a0808" stroke-width="1" fill="none"/>
+  <path d="M29.5 20 C30 18.5 40 18.5 40.5 20" stroke="#1a0808" stroke-width="1" fill="none"/>
+  <!-- Brows -->
+  <path d="M17 15 L27 18" stroke="#1a0808" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M31 18 L41 15" stroke="#1a0808" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M25 30 Q29 32 33 30" stroke="#c07050" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+  </svg>`;
+}
+
+function makeSvg_wind(){
+  return `<svg width="60" height="112" viewBox="0 0 60 112">
+  <!-- Striped haori (wind pattern) -->
+  <path d="M24 42 C8 58 4 90 2 110 L16 108 C18 84 22 64 30 52Z" fill="#88aacc"/>
+  <!-- Stripes -->
+  <line x1="4" y1="70" x2="16" y2="68" stroke="#aaccee" stroke-width="2"/>
+  <line x1="4" y1="80" x2="16" y2="78" stroke="#aaccee" stroke-width="2"/>
+  <line x1="4" y1="90" x2="16" y2="88" stroke="#aaccee" stroke-width="2"/>
+  <line x1="4" y1="100" x2="16" y2="98" stroke="#aaccee" stroke-width="2"/>
+  <!-- Body -->
+  <rect x="20" y="40" width="24" height="40" rx="4" fill="#1a2010"/>
+  <rect x="18" y="60" width="28" height="7" rx="3.5" fill="#0a1008"/>
+  <!-- Legs -->
+  <rect x="20" y="78" width="10" height="30" rx="4" fill="#1a2010" transform="rotate(-6,25,78)"/>
+  <rect x="32" y="78" width="10" height="30" rx="4" fill="#1a2010" transform="rotate(6,37,78)"/>
+  <ellipse cx="22" cy="108" rx="8" ry="4" fill="#2a1c10"/>
+  <ellipse cx="39" cy="108" rx="8" ry="4" fill="#2a1c10"/>
+  <!-- Arms gripping -->
+  <path d="M20 44 L7 36 L9 44 L22 50Z" fill="#1a2010"/>
+  <path d="M40 44 L52 36 L54 44 L42 50Z" fill="#1a2010"/>
+  <ellipse cx="6" cy="40" rx="5.5" ry="6.5" fill="#e8b070"/>
+  <ellipse cx="54" cy="40" rx="5.5" ry="6.5" fill="#e8b070"/>
+  <!-- HEAD -->
+  <rect x="25" y="28" width="12" height="14" rx="3" fill="#e8b070"/>
+  <path d="M14 18 C14 4 48 4 48 18 C48 32 44 40 31 42 C18 40 14 32 14 18Z" fill="#e8b070"/>
+  <!-- Wild hair: white/silver spikes -->
+  <path d="M12 16 L8 2 L18 12" fill="#e8e8e8"/>
+  <path d="M18 12 L16 -2 L26 10" fill="#f0f0f0"/>
+  <path d="M26 10 L25 -4 L33 8" fill="#ffffff"/>
+  <path d="M33 8 L35 -4 L42 10" fill="#f0f0f0"/>
+  <path d="M42 10 L46 -2 L52 12" fill="#e8e8e8"/>
+  <ellipse cx="31" cy="10" rx="20" ry="11" fill="#d8d8e8"/>
+  <!-- Scar on chin area -->
+  <path d="M27 37 L29 41" stroke="#c08060" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Eyes: sharp, pale -->
+  <ellipse cx="24" cy="24" rx="6" ry="6.5" fill="white"/>
+  <ellipse cx="38" cy="24" rx="6" ry="6.5" fill="white"/>
+  <path d="M18 19 C18 18 30 18 30 19" fill="#1a1020"/>
+  <path d="M32 19 C32 18 44 18 44 19" fill="#1a1020"/>
+  <ellipse cx="24" cy="25" rx="4.5" ry="5" fill="#5566aa"/>
+  <ellipse cx="38" cy="25" rx="4.5" ry="5" fill="#5566aa"/>
+  <ellipse cx="24" cy="26" rx="2.5" ry="3" fill="#0a0a18"/>
+  <ellipse cx="38" cy="26" rx="2.5" ry="3" fill="#0a0a18"/>
+  <ellipse cx="25.5" cy="22.5" rx="1.8" ry="2.2" fill="white"/>
+  <ellipse cx="39.5" cy="22.5" rx="1.8" ry="2.2" fill="white"/>
+  <path d="M18 20 L30 20" stroke="#1a1020" stroke-width="1.2"/>
+  <path d="M32 20 L44 20" stroke="#1a1020" stroke-width="1.2"/>
+  <!-- Brows: angular, sharp -->
+  <path d="M17 16 L29 19" stroke="#888898" stroke-width="3" stroke-linecap="round"/>
+  <path d="M33 19 L45 16" stroke="#888898" stroke-width="3" stroke-linecap="round"/>
+  <path d="M24 32 Q31 35 38 32" stroke="#c07050" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+  <!-- Scar under eye -->
+  <line x1="18" y1="28" x2="20" y2="34" stroke="#c07a5a" stroke-width="1.5"/>
+  </svg>`;
+}
+
+function makeSvg_flame(){
+  return `<svg width="62" height="115" viewBox="0 0 62 115">
+  <!-- Flame haori -->
+  <path d="M26 44 C10 60 6 94 4 114 L18 112 C20 88 24 66 32 54Z" fill="#ff4400"/>
+  <!-- Flame tips on haori -->
+  <path d="M6 76 Q10 68 8 78 Q12 70 10 82 Q14 72 12 84" stroke="#ffcc00" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <path d="M6 92 Q10 84 8 94 Q12 86 10 98" stroke="#ffaa00" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- Body -->
+  <rect x="21" y="44" width="24" height="40" rx="4" fill="#1a1a2a"/>
+  <rect x="19" y="64" width="28" height="6" rx="3" fill="#0a080a"/>
+  <!-- Legs -->
+  <rect x="21" y="82" width="10" height="30" rx="4" fill="#1a1a2a" transform="rotate(10,26,82)"/>
+  <rect x="33" y="82" width="10" height="30" rx="4" fill="#1a1a2a" transform="rotate(-10,38,82)"/>
+  <ellipse cx="24" cy="112" rx="8" ry="4.5" fill="#1a0a00"/>
+  <ellipse cx="40" cy="112" rx="8" ry="4.5" fill="#1a0a00"/>
+  <!-- Arms up gripping rope with flames! -->
+  <path d="M22 48 L8 38 L10 46 L24 54Z" fill="#1a1a2a"/>
+  <path d="M40 48 L54 38 L56 46 L42 54Z" fill="#1a1a2a"/>
+  <ellipse cx="7" cy="42" rx="5.5" ry="6" fill="#f0b070"/>
+  <ellipse cx="55" cy="42" rx="5.5" ry="6" fill="#f0b070"/>
+  <!-- Flame from hands! -->
+  <path d="M0 36 Q4 26 8 34 Q4 22 10 28 Q6 16 14 24" stroke="#ff6600" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <path d="M56 36 Q60 26 64 34 Q58 22 64 28 Q58 16 66 24" stroke="#ff8800" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <!-- HEAD -->
+  <rect x="25" y="30" width="12" height="16" rx="3" fill="#f0b070"/>
+  <path d="M15 20 C15 6 47 6 47 20 C47 34 43 42 31 44 C19 42 15 34 15 20Z" fill="#f0b070"/>
+  <!-- Flame hair: red/orange wild -->
+  <path d="M13 18 L8 4 L18 14" fill="#cc2200"/>
+  <path d="M18 14 L14 0 L24 10" fill="#dd3300"/>
+  <path d="M24 10 L22 -2 L32 8" fill="#ee4400"/>
+  <path d="M32 8 L32 -4 L40 8" fill="#dd3300"/>
+  <path d="M40 8 L42 -2 L50 12" fill="#cc2200"/>
+  <ellipse cx="31" cy="10" rx="19" ry="10" fill="#cc2200"/>
+  <!-- Long flowing flame hair sides -->
+  <path d="M14 18 C6 34 8 62 6 88" stroke="#aa1800" stroke-width="9" fill="none" stroke-linecap="round"/>
+  <!-- Flame-tip hair -->
+  <path d="M6 88 Q4 98 8 94 Q6 102 12 98" stroke="#ff6600" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <!-- Eyes: fierce golden -->
+  <ellipse cx="24" cy="24" rx="6.5" ry="7" fill="white"/>
+  <ellipse cx="38" cy="24" rx="6.5" ry="7" fill="white"/>
+  <path d="M17.5 19 C17.5 18 30.5 18 30.5 19" fill="#1a0808"/>
+  <path d="M31.5 19 C31.5 18 44.5 18 44.5 19" fill="#1a0808"/>
+  <ellipse cx="24" cy="25" rx="5" ry="5.5" fill="#cc7700"/>
+  <ellipse cx="38" cy="25" rx="5" ry="5.5" fill="#cc7700"/>
+  <ellipse cx="24" cy="25" rx="3.5" ry="4" fill="#ee9900"/>
+  <ellipse cx="38" cy="25" rx="3.5" ry="4" fill="#ee9900"/>
+  <ellipse cx="24" cy="26" rx="2" ry="2.5" fill="#0a0500"/>
+  <ellipse cx="38" cy="26" rx="2" ry="2.5" fill="#0a0500"/>
+  <ellipse cx="25.5" cy="22.5" rx="1.8" ry="2.2" fill="white"/>
+  <ellipse cx="39.5" cy="22.5" rx="1.8" ry="2.2" fill="white"/>
+  <path d="M17.5 31 C19 32 23 33 30.5 31" stroke="#1a0808" stroke-width=".8" fill="none"/>
+  <path d="M31.5 31 C33 32 37 33 44.5 31" stroke="#1a0808" stroke-width=".8" fill="none"/>
+  <!-- Bold brows angled down -->
+  <path d="M17 16 L29 20" stroke="#660000" stroke-width="3.5" stroke-linecap="round"/>
+  <path d="M33 20 L45 16" stroke="#660000" stroke-width="3.5" stroke-linecap="round"/>
+  <path d="M22 34 Q31 38 40 34" stroke="#c07050" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <rect x="28" y="34" width="4" height="4" fill="white" rx=".8"/>
+  <rect x="34" y="34" width="4" height="4" fill="white" rx=".8"/>
+  </svg>`;
+}
+
+function makeSvg_thunder(){
+  return `<svg width="60" height="112" viewBox="0 0 60 112">
+  <!-- Purple thunder haori -->
+  <path d="M24 42 C8 58 4 90 2 110 L16 108 C18 84 22 64 30 52Z" fill="#5500aa"/>
+  <!-- Thunder marks -->
+  <path d="M6 66 L10 58 L8 66 L12 58" stroke="#aa88ff" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <path d="M6 82 L10 74 L8 82 L12 74" stroke="#aa88ff" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <path d="M6 96 L10 88 L8 96" stroke="#aa88ff" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- Body -->
+  <rect x="20" y="40" width="24" height="40" rx="4" fill="#1a0a2a"/>
+  <rect x="18" y="60" width="28" height="7" rx="3.5" fill="#0a0514"/>
+  <!-- Legs -->
+  <rect x="20" y="78" width="10" height="30" rx="4" fill="#1a0a2a" transform="rotate(-5,25,78)"/>
+  <rect x="32" y="78" width="10" height="30" rx="4" fill="#1a0a2a" transform="rotate(5,37,78)"/>
+  <ellipse cx="22" cy="108" rx="8" ry="4" fill="#0a0514"/>
+  <ellipse cx="39" cy="108" rx="8" ry="4" fill="#0a0514"/>
+  <!-- Arms gripping -->
+  <path d="M20 44 L6 36 L8 44 L22 50Z" fill="#1a0a2a"/>
+  <path d="M40 44 L54 36 L56 44 L42 50Z" fill="#1a0a2a"/>
+  <ellipse cx="5" cy="40" rx="5.5" ry="6" fill="#e8b070"/>
+  <ellipse cx="55" cy="40" rx="5.5" ry="6" fill="#e8b070"/>
+  <!-- Lightning from hands -->
+  <path d="M-2 34 L3 26 L1 36 L6 28 L4 38" stroke="#aa44ff" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <path d="M62 34 L57 26 L59 36 L54 28 L56 38" stroke="#aa44ff" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <!-- HEAD -->
+  <rect x="24" y="28" width="12" height="16" rx="3" fill="#e8b070"/>
+  <path d="M14 18 C14 4 46 4 46 18 C46 32 42 40 30 42 C18 40 14 32 14 18Z" fill="#e8b070"/>
+  <!-- Spiky black hair — BIG spikes like Inosuke/thunder character -->
+  <path d="M12 18 L6 2 L16 12" fill="#0a0a18"/>
+  <path d="M16 12 L12 -2 L22 8" fill="#0a0a18"/>
+  <path d="M22 8 L20 -6 L30 6" fill="#111128"/>
+  <path d="M30 6 L30 -6 L40 6" fill="#0a0a18"/>
+  <path d="M40 6 L42 -4 L50 10" fill="#0a0a18"/>
+  <path d="M50 10 L54 0 L58 14" fill="#0a0a18"/>
+  <ellipse cx="30" cy="8" rx="20" ry="10" fill="#0a0a18"/>
+  <!-- Purple tips -->
+  <path d="M22 8 L20 -6 L30 6" fill="#5500aa" opacity=".6"/>
+  <path d="M30 6 L30 -6 L40 6" fill="#5500aa" opacity=".6"/>
+  <!-- Eyes: pale, intense -->
+  <ellipse cx="23" cy="23" rx="6" ry="6.5" fill="white"/>
+  <ellipse cx="37" cy="23" rx="6" ry="6.5" fill="white"/>
+  <path d="M17 18 C17 17 29 17 29 18" fill="#0a0a18"/>
+  <path d="M31 18 C31 17 43 17 43 18" fill="#0a0a18"/>
+  <ellipse cx="23" cy="24" rx="4.5" ry="5" fill="#7733cc"/>
+  <ellipse cx="37" cy="24" rx="4.5" ry="5" fill="#7733cc"/>
+  <ellipse cx="23" cy="25" rx="2.5" ry="2.8" fill="#080010"/>
+  <ellipse cx="37" cy="25" rx="2.5" ry="2.8" fill="#080010"/>
+  <ellipse cx="24.5" cy="21.5" rx="1.8" ry="2.2" fill="white"/>
+  <ellipse cx="38.5" cy="21.5" rx="1.8" ry="2.2" fill="white"/>
+  <path d="M17 29 C19 30 23 31 29 29" stroke="#0a0a18" stroke-width=".8" fill="none"/>
+  <path d="M31 29 C33 30 37 31 43 29" stroke="#0a0a18" stroke-width=".8" fill="none"/>
+  <!-- Brows -->
+  <path d="M16 15 L27 18" stroke="#0a0a18" stroke-width="3" stroke-linecap="round"/>
+  <path d="M33 18 L44 15" stroke="#0a0a18" stroke-width="3" stroke-linecap="round"/>
+  <!-- Serious mouth -->
+  <path d="M23 34 L37 34" stroke="#b07050" stroke-width="1.8" stroke-linecap="round"/>
+  <!-- Nose -->
+  <path d="M28 29 Q30 32 32 29" stroke="#b07050" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+  </svg>`;
+}
+
+// Create balloon+character combos
+function createBalloonChar(data, leftPct) {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'bfloat';
+  wrapper.style.cssText = `position:absolute;left:${leftPct}%;bottom:auto;z-index:14;cursor:pointer;--bd:${data.floatD};--bs:${data.bs};display:flex;flex-direction:column;align-items:center;`;
+
+  // Balloon SVG
+  const bsvg = document.createElementNS('http://www.w3.org/2000/svg','svg');
+  bsvg.setAttribute('width','60');bsvg.setAttribute('height','80');bsvg.setAttribute('viewBox','0 0 60 80');
+  const col=data.col, shine='rgba(255,255,255,0.35)';
+  bsvg.innerHTML=`
+    <ellipse cx="30" cy="34" rx="26" ry="30" fill="${col}" stroke="${col}" stroke-width="1"/>
+    <ellipse cx="22" cy="20" rx="8" ry="12" fill="${shine}" transform="rotate(-20,22,20)"/>
+    <ellipse cx="30" cy="64" rx="5" ry="3.5" fill="${col}"/>
+    <line x1="30" y1="67" x2="30" y2="80" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>`;
+
+  // Char SVG container
+  const charDiv=document.createElement('div');
+  charDiv.innerHTML=data.charSvg;
+
+  wrapper.appendChild(bsvg);
+  wrapper.appendChild(charDiv);
+
+  // Set vertical position (float near top)
+  wrapper.style.top=(data.startY)+'px';
+  wrapper.dataset.col=data.col;
+
+  wrapper.addEventListener('click',()=>popIt(wrapper,data.col));
+  scene.appendChild(wrapper);
+
+  // Animate into position
+  setTimeout(()=>{
+    wrapper.style.transition='top 1.5s cubic-bezier(.2,.8,.4,1)';
+    wrapper.style.top='30px';
+  },100+Math.random()*400);
+
+  return wrapper;
+}
+
+function popIt(wrapper, col) {
+  if(wrapper.dataset.popped) return;
+  wrapper.dataset.popped='1';
+  wrapper.style.cursor='default';
+
+  // Remove float animation, trigger fall
+  wrapper.style.animation='none';
+  wrapper.classList.remove('bfloat');
+  const charEl=wrapper.querySelector('div');
+  if(charEl){
+    charEl.style.animation='charFall 1.1s cubic-bezier(.55,.06,.68,.19) forwards';
+    charEl.style.transformOrigin='center top';
+  }
+  // Pop the balloon (first child svg)
+  const bsvg=wrapper.querySelector('svg');
+  if(bsvg){
+    bsvg.style.animation='bpop 0.4s ease-out forwards';
+    bsvg.style.transformOrigin='center';
+  }
+
+  // Particles
+  const rect=wrapper.getBoundingClientRect();
+  const sRect=scene.getBoundingClientRect();
+  const cx=rect.left-sRect.left+30, cy=rect.top-sRect.top+34;
+  for(let i=0;i<12;i++){
+    const p=document.createElement('div');
+    p.className='pp';
+    const a=(i/12)*Math.PI*2, d=35+Math.random()*35;
+    p.style.cssText=`background:${col};width:${7+Math.random()*5}px;height:${7+Math.random()*5}px;left:${cx}px;top:${cy}px;--px:${Math.cos(a)*d}px;--py:${Math.sin(a)*d}px;`;
+    scene.appendChild(p);
+    setTimeout(()=>p.remove(),800);
+  }
+
+  popped++;
+  const em=['💥','🎊','🎉','⭐','✨','🌟','🔥','⚡'];
+  document.getElementById('score').textContent=`${em[~~(Math.random()*em.length)]} BOOM! ${popped} balloon${popped>1?'s':''} popped! ${em[~~(Math.random()*em.length)]}`;
+
+  // launch firework
+  for(let i=0;i<3;i++) setTimeout(()=>launchFW(),i*120);
+  if(!fwRunning) animFW();
+
+  // remove after fall
+  setTimeout(()=>wrapper.remove(),1500);
+}
+
+// Fireball shooter (thunder character on ground)
+function shootFireball(){
+  // find a live balloon char
+  const balloons=[...scene.querySelectorAll('.bfloat')];
+  if(!balloons.length) return;
+  const target=balloons[~~(Math.random()*balloons.length)];
+
+  const shooter=document.getElementById('g3'); // zenitsu
+  const sRect=scene.getBoundingClientRect();
+  const shooterRect=shooter.getBoundingClientRect();
+  const targetRect=target.getBoundingClientRect();
+
+  const sx=shooterRect.left-sRect.left+34;
+  const sy=shooterRect.top-sRect.top+30;
+  const tx=targetRect.left-sRect.left+30;
+  const ty=targetRect.top-sRect.top+34;
+
+  const fb=document.createElement('div');
+  fb.className='fireball';
+  fb.style.left=sx+'px';
+  fb.style.top=sy+'px';
+  scene.appendChild(fb);
+
+  const dx=tx-sx, dy=ty-sy, dist=Math.sqrt(dx*dx+dy*dy);
+  const dur=dist/380; // seconds
+  const startTime=performance.now();
+
+  function moveFB(now){
+    const t=Math.min((now-startTime)/(dur*1000),1);
+    const cx=sx+dx*t, cy=sy+dy*t;
+    fb.style.left=cx+'px';
+    fb.style.top=cy+'px';
+    if(t<1) requestAnimationFrame(moveFB);
+    else {
+      fb.remove();
+      // Pop target if still alive
+      if(!target.dataset.popped) popIt(target,target.dataset.col||'#ff8800');
+    }
+  }
+  requestAnimationFrame(moveFB);
+}
+
+// Initial balloon chars
+const positions=[8,28,50,73];
+BCHARS.forEach((d,i)=>{
+  setTimeout(()=>createBalloonChar(d,positions[i]),i*300+200);
+});
+
+// Spawn new set
+function spawnBalloons(){
+  const cols=['#ff3333','#aa44ff','#ff8800','#00bbff','#ff3399','#ffcc00'];
+  const chars=[makeSvg_water,makeSvg_wind,makeSvg_flame,makeSvg_thunder];
+  for(let i=0;i<4;i++){
+    setTimeout(()=>{
+      const d={
+        col:cols[~~(Math.random()*cols.length)],
+        charSvg:chars[~~(Math.random()*chars.length)](),
+        startX:10+Math.random()*75,
+        startY:-180,
+        floatD:(2.2+Math.random()*1.5)+'s',
+        bs:Math.random()>.5?1:-1
+      };
+      createBalloonChar(d,10+Math.random()*75);
+    },i*200);
+  }
+  for(let i=0;i<5;i++) setTimeout(()=>launchFW(),i*200);
+  if(!fwRunning) animFW();
+}
+
+// Auto fireball every 4-7 seconds
+function scheduleFireball(){
+  const delay=4000+Math.random()*3000;
+  setTimeout(()=>{ shootFireball(); scheduleFireball(); },delay);
+}
+setTimeout(scheduleFireball,2500);
+
+// Fireworks
+const canvas=document.getElementById('fw');
+const ctx=canvas.getContext('2d');
+function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}
+resize();window.addEventListener('resize',resize);
+const FWC=['#ff3366','#ff9900','#ffff00','#00ff88','#00ddff','#cc00ff','#ff6ef7','#ffcc00'];
+let parts=[],fwRunning=false;
+function launchFW(){
+  const x=80+Math.random()*(window.innerWidth-160),y=50+Math.random()*(window.innerHeight*.44),c=FWC[~~(Math.random()*FWC.length)];
+  for(let i=0;i<48;i++){const a=(i/48)*Math.PI*2,sp=3+Math.random()*6;parts.push({x,y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,col:c,life:1,sz:2+Math.random()*3});}
+}
+function animFW(){
+  if(!parts.length){fwRunning=false;return;}
+  fwRunning=true;
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  parts=parts.filter(p=>p.life>0);
+  for(const p of parts){p.x+=p.vx;p.y+=p.vy;p.vy+=.1;p.vx*=.97;p.life-=.017;ctx.globalAlpha=Math.max(0,p.life);ctx.fillStyle=p.col;ctx.beginPath();ctx.arc(p.x,p.y,p.sz,0,Math.PI*2);ctx.fill();}
+  ctx.globalAlpha=1;
+  requestAnimationFrame(animFW);
+}
+setTimeout(()=>{for(let i=0;i<10;i++) setTimeout(()=>launchFW(),i*280);animFW();},700);
+setInterval(()=>{for(let i=0;i<4;i++) setTimeout(()=>launchFW(),i*320);if(!fwRunning)animFW();},7000);
+</script>
+</body>
+</html>
